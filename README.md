@@ -1,12 +1,19 @@
 # Managed app example
 
-export userid="57cb5bd3-1a09-462f-8d3a-6c3ba52befac"
-export roleid="/subscriptions/a0f4a733-4fce-4d49-b8a8-d30541fc1b45/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+az ad app create --display-name managedServicesAdmin --homepage http://managedServicesAdmin --identifier-uris http://managedServicesAdmin
+az ad sp create --id managedServicesAdmin
+
+userid=$(az ad user show --upn-or-object-id managedServicesAdmin --query objectId --output tsv)
+
+roleid=$(az role definition list --name Owner --query [].name --output tsv)
+userid="afa49e36-cf61-46e1-b74f-e2fa9b5d48cd"
 az managedapp definition create -g catalog \
         -n mojeTestAppka \
         -l westeurope \
-        --display-name "MyManMoje super appka" \
+        --display-name "Moje super appka" \
         --description "My Managed App Def description" \
         -a "$userid:$roleid" \
-        --lock-level None \
-        --package-file-uri "https://github.com/tkubica12/azure-managed-app/raw/master/app.zip"
+        --lock-level ReadOnly \
+        --package-file-uri "https://raw.githubusercontent.com/tkubica12/azure-managed-app/master/app.zip"
+
+az managedapp definition delete -g catalog -n mojeTestAppka

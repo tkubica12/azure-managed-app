@@ -8,38 +8,95 @@
         ],
         "steps": [
             {
-                "name": "storageConfig",
-                "label": "Storage settings",
+                "name": "agreement",
+                "label": "Agreement with central IT",
                 "subLabel": {
-                    "preValidation": "Configure the infrastructure settings",
+                    "preValidation": "Please agree to central IT policy",
                     "postValidation": "Done"
                 },
-                "bladeTitle": "Storage settings",
+                "bladeTitle": "Agreement with central IT",
                 "elements": [
                     {
-                        "name": "storageAccounts",
-                        "type": "Microsoft.Storage.MultiStorageAccountCombo",
-                        "label": {
-                            "prefix": "Storage account name prefix",
-                            "type": "Storage account type"
+                        "name": "agreement",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Agree with central IT policy for managed services",
+                        "toolTip": "Since this is managed service you will not gain administrator access to your resources. Costs for Azure resources consumption will be billed to your cost location.",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": [
+                                {
+                                "label": "Agree",
+                                "value": "Agree"
+                                }
+                            ]
                         },
-                        "defaultValue": {
-                            "type": "Standard_LRS"
-                        },
+                        "visible": true
+                    }
+                ]
+            },
+            {
+                "name": "appSettings",
+                "label": "Application settings",
+                "subLabel": {
+                    "preValidation": "Configure the application settings",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "Application settings",
+                "elements": [
+                    {
+                        "name": "appSize",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Application size",
+                        "toolTip": "Please select application size. Small comes with cheap A1_v2 VM and 32 GB of storage, Medium with A2_v2 VM and 128 GB of storage, Large with D2v3 VM and 1 TB of storage.",
+                        "defaultValue": "Small",
                         "constraints": {
                             "allowedTypes": [
-                                "Premium_LRS",
-                                "Standard_LRS",
-                                "Standard_GRS"
-                            ]
+                                {
+                                  "label": "Small",
+                                  "value": "Small"
+                                },
+                                {
+                                  "label": "Medium",
+                                  "value": "Medium"
+                                },
+                                {
+                                  "label": "Large",
+                                  "value": "Large"
+                                }
+                              ]
+                        }
+                    },
+                    {
+                        "name": "dnsAndPublicIP",
+                        "type": "Microsoft.Network.PublicIpAddressCombo",
+                        "label": {
+                            "publicIpAddress": "Public IP address",
+                            "domainNameLabel": "DNS label"
+                        },
+                        "toolTip": {
+                            "domainNameLabel": "DNS endpoint for the Managed Web App IP address."
+                        },
+                        "defaultValue": {
+                            "publicIpAddressName": "app-publicip"
+                        },
+                        "options": {
+                            "hideNone": true,
+                            "hideExisting": true,
+                            "hideDomainNameLabel": false
+                        },
+                        "constraints": {
+                            "required": {
+                                "domainNameLabel": true
+                            }
                         }
                     }
                 ]
             }
         ],
         "outputs": {
-            "storageAccountNamePrefix": "[steps('storageConfig').storageAccounts.prefix]",
-            "storageAccountType": "[steps('storageConfig').storageAccounts.type]",
+            "dnsLabelPrefix": "[steps('webConfig').dnsAndPublicIP.domainNameLabel]",
+            "publicIPAddressName": "[steps('webConfig').dnsAndPublicIP.name]",
+            "appSize": "[steps('appSize').name]",
             "location": "[location()]"
         }
     }
