@@ -94,6 +94,7 @@
             }
         ],
         "outputs": {
+            "location": "[location()]",
             "dnsLabelPrefix": "[steps('appSettings').dnsAndPublicIP.domainNameLabel]",
             "publicIPAddressName": "[steps('appSettings').dnsAndPublicIP.name]",
             "appSize": "[steps('appSettings').appSize]",
