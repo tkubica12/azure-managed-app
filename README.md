@@ -10,8 +10,8 @@ userid="afa49e36-cf61-46e1-b74f-e2fa9b5d48cd"
 az managedapp definition create -g catalog \
         -n myManagedApp \
         -l westeurope \
-        --display-name "Moje super appka" \
-        --description "My Managed App Def description" \
+        --display-name "My Managed App" \
+        --description "This is demo of application managed by central IT team" \
         -a "$userid:$roleid" \
         --lock-level ReadOnly \
         --package-file-uri "https://raw.githubusercontent.com/tkubica12/azure-managed-app/master/app.zip"
