@@ -8,7 +8,7 @@ userid=$(az ad user show --upn-or-object-id managedServicesAdmin --query objectI
 roleid=$(az role definition list --name Owner --query [].name --output tsv)
 userid="afa49e36-cf61-46e1-b74f-e2fa9b5d48cd"
 az managedapp definition create -g catalog \
-        -n mojeTestAppka \
+        -n myManagedApp \
         -l westeurope \
         --display-name "Moje super appka" \
         --description "My Managed App Def description" \

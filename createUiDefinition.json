@@ -50,7 +50,7 @@
                         "toolTip": "Please select application size. Small comes with cheap A1_v2 VM and 32 GB of storage, Medium with A2_v2 VM and 128 GB of storage, Large with D2v3 VM and 1 TB of storage.",
                         "defaultValue": "Small",
                         "constraints": {
-                            "allowedTypes": [
+                            "allowedValues": [
                                 {
                                   "label": "Small",
                                   "value": "Small"
